@@ -1,0 +1,62 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Saturno | Home</ui:define>
+
+	<ui:define name="corpo">
+		<h1>Calcular datas</h1>
+
+		<p:messages closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		<h:form>
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Calcular" action="#{indexMBean.calcular}"
+						update="@form" />
+					<p:button value="Limpar" outcome="/Index" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="pnlCalendario">
+				<p:outputLabel for="inicio" value="Data inicial" />
+				<p:calendar pattern="dd/MM/yyyy" mindate="01/01/0001"
+					maxdate="31/12/9999" id="inicio" mask="true"
+					value="#{indexMBean.dtInicio}" />
+
+
+				<p:outputLabel for="fim" value="Data final" />
+				<p:calendar pattern="dd/MM/yyyy" mindate="01/01/0001"
+					maxdate="31/12/9999" id="fim" mask="true"
+					value="#{indexMBean.dtFim}" />
+			</p:panelGrid>
+
+
+
+
+			<p:dataTable id="tabaelaResultados" value="#{indexMBean.resultados}"
+				var="resultado" style="margin-top: 20px"
+				emptyMessage="Calcule primeiro, gafanhoto!" rows="25"
+				paginator="true" paginatorPosition="bottom"
+				paginatorAlwaysVisible="false">
+				<p:column width="200" headerText="Data inicial">
+					<h:outputText value="#{resultado.inicio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Data final" width="200">
+					<h:outputText value="#{resultado.fim}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Resultado">
+					<h:outputText value="#{resultado.mensagem}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

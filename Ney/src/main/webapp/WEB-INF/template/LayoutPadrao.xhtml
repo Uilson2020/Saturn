@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">Saturn</ui:insert></title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+</h:head>
+<h:body>
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()" />
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		closable="false" resizable="false" showHeader="false">
+				<p:graphicImage library="images" name="loading.gif" />Carregando...
+	</p:dialog>
+
+	<header>
+		<div style="float: left">
+			<h:link outcome="/Home">
+				<h:graphicImage library="images" name="saturn.png" width="75" height="50"/>
+			</h:link>
+		</div>
+		<div style="float: right; margin-right: 110px;">
+			<span style="float: left; height: 30px; line-height:30px; margin-right: 60px; padding-top: 10px;  color: black !important;">
+				Olá gafanhoto!
+			</span>
+			
+		</div>
+	</header>
+	<main id="conteudo">
+		<ui:insert name="corpo" />
+
+	</main>
+
+</h:body>
+
+</html>
