@@ -1,6 +1,7 @@
 package mBean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -17,6 +18,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import model.ResultadoDatas;
+import utils.DataUtil;
 
 @ManagedBean
 @ViewScoped
@@ -42,17 +44,46 @@ public class IndexMBean implements Serializable {
 			LocalDate inicio = dtInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();		
 			LocalDate fim = dtFim.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			
+			int dias = contarDias();
+			int meses = contarMeses();
+			
 			Period diferenca = inicio.until(fim);
 			
-			if (diferenca.getYears() == 666 & diferenca.getDays() == 0 && diferenca.getMonths() == 0) {
-				resultado.setMensagem(diferenca.getYears() + " anos, your soul is mine!");
-			}else {
-				resultado.setMensagem(diferenca.getYears() + " anos " + diferenca.getMonths() + " meses " + diferenca.getDays() + " dias!");
-			}
+				resultado.setMensagem(diferenca.getYears() + " anos " + meses + " meses " + dias + " dias!");
 			
 			this.resultados.add(resultado);
 			
 		}
+	}
+
+	private int contarMeses() {
+		String inicio = DataUtil.getMes(this.dtInicio);
+		String fim = DataUtil.getMes(this.dtFim);
+		String diaInicio = DataUtil.getDia(this.dtInicio);
+		String diaFim = DataUtil.getDia(this.dtFim);
+		
+		int resultado = Integer.parseInt(fim) - Integer.parseInt(inicio);
+		if (resultado < 0) {
+			resultado += 12;
+		}
+		if (Integer.parseInt(diaInicio) > Integer.parseInt(diaFim)) {
+			resultado --;
+		}
+		return resultado;
+	}
+
+	@SuppressWarnings("deprecation")
+	private int contarDias() {
+		// TODO Auto-generated method stub
+		
+		String inicio = DataUtil.getDia(this.dtInicio);
+		String fim = DataUtil.getDia(this.dtFim);
+		
+		int resultado = Integer.parseInt(fim) - Integer.parseInt(inicio);
+		if(resultado < 0) {
+			resultado += 30;
+		}
+		return resultado;
 	}
 
 	public boolean validarCampos() {
